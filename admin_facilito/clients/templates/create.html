@@ -1,11 +1,7 @@
-<h3> Create </h3>
+<h3>Create</h3>
 
-{% if message %}
-	<p>{{ message }}</p>
-{% endif %}
-
-<form action="" method="post">
+<form action="" method = "post">
 	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value="registrate">
+	{{  form.as_p }}
+	<input type="submit" value="crear">
 </form>

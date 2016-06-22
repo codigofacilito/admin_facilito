@@ -1,1 +1,4 @@
-<h3>Welcome  {{username }} </h3>
+<h3>Welcome</h3>
+
+<a href="{% url 'client:logout' %}">Logout</a>
+<a href="{% url 'client:show' request.user.username %}">show</a>
