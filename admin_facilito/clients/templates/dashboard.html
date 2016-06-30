@@ -1,4 +1,8 @@
-<h3>Welcome</h3>
+<h3>Bienvenids</h3>
 
 <a href="{% url 'client:logout' %}">Logout</a>
-<a href="{% url 'client:show' request.user.username %}">show</a>
+<a href="{% url 'client:show' user.username %}">show</a>
+<a href="{% url 'client:edit'%}">Edit</a>
+<a href="{% url 'client:edit_password'%}">Edit Password</a>
+
+
