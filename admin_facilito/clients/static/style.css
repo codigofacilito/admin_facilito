@@ -1,0 +1,14 @@
+h3{
+
+}
+.error_message{
+	padding: 10px;
+	background-color: #C6537B;
+	color: white;
+}
+
+.success_message{
+	padding: 10px;
+	background-color: #99D581;
+	color: white;
+}
