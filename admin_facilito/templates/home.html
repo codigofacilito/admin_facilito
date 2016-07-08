@@ -1,0 +1,38 @@
+<html>
+<head>
+	<title> Home </title>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+</head>
+<body>
+	
+
+	<header>
+	  <div class="navbar-fixed">
+	    <nav>
+	      <div class="nav-wrapper #9e9e9e grey">
+	        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+	        <ul class="right hide-on-med-and-down lighten-2">
+	          <li><a href="{% url 'client:login' %}">Login</a></li>
+	          <li><a href="{% url 'client:create' %}">Registro</a></li>
+	        </ul>
+	        <ul class="side-nav" id="mobile-demo">
+	          <li><a href="{% url 'client:login' %}">Login</a></li>
+	          <li><a href="{% url 'client:create' %}">Registro</a></li>
+	        </ul>
+	      </div>
+	    </nav>
+	   </div>
+	</header>
+	
+	<h3>Home</h3>
+
+
+
+</body>
+</html>
