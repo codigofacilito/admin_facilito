@@ -1,4 +1,7 @@
 from django.shortcuts import render
 
-def home(reques):
-	return render(reques, 'home.html', {})
+def home(request):
+	return render(request, 'home.html', {})
+
+def error_404(request):
+	return render(request, 'error_404.html', {})	

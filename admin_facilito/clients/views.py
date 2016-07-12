@@ -86,7 +86,7 @@ class EditClass(LoginRequiredMixin, UpdateView, SuccessMessageMixin):
 	template_name = 'edit.html'
 	success_url = reverse_lazy('client:edit')
 	form_class = EditUserForm
-	success_message = "Tu usario ha sido actualizado"
+	success_message = "Tu usuario ha sido actualizado"
 
 	def form_valid(self, request, *args, **kwargs):
 		messages.success(self.request, self.success_message)
@@ -112,7 +112,7 @@ def edit_password(request):
 				request.user.save()
 
 				update_session_auth_hash( request, request.user )
-				messages.success(request, 'password actualizado, messages')
+				messages.success(request, 'password actualizado correctamente')
 			else:
 				messages.error(request, 'No es posible actualizar el password, message')
 

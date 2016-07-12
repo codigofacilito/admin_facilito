@@ -15,7 +15,7 @@ Functions
 
 def must_be_gt(value_password):
 	if len(value_password) < 2:
-		raise forms.ValidationError('El password debe contener por lo menos 5 caracteres, desde una func')
+		raise forms.ValidationError('El password debe contener por lo menos 5 caracteres')
 
 """
 Class
@@ -50,8 +50,8 @@ class EditPasswordForm(forms.Form):
 
 	def clean(self):
 		clean_data = super(EditPasswordForm,self).clean()
-		password1 = clean_data['new_password']
-		password2 = clean_data['repeat_password']
+		password1 = clean_data.get('new_password')
+		password2 = clean_data.get('repeat_password')
 
 		if password1 != password2:
 			raise forms.ValidationError('Los password no son los mismos')
