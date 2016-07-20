@@ -1,0 +1,59 @@
+{% load staticfiles %}
+<!DOCTYPE htlm>
+<html>
+<head>
+	<meta charset="UTF-8">
+	
+	<title> {% block title %} {% endblock %} </title>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+     
+   {% block scripts %} {% endblock %} 
+
+</head>
+<body>
+	<header>
+	  <div class="navbar-fixed">
+	    <nav>
+	      <div class="nav-wrapper #9e9e9e grey">
+	      	<a href="{% url 'client:dashboard' %}" class="brand-logo">Admin Facilito</a>
+	        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+	        
+	        <ul class="right hide-on-med-and-down lighten-2">
+	          <li><a href="{% url 'client:edit' %}">Editar</a></li>
+	          <li><a href="{% url 'client:edit_password' %}">Editar Password</a></li>
+	          <li><a href="{% url 'client:logout' %}">logout</a></li>
+	        </ul>
+
+	        <ul class="side-nav" id="mobile-demo">
+	          <li><a href="{% url 'client:edit' %}">Editar</a></li>
+	          <li><a href="{% url 'client:edit_password' %}">Editar Password</a></li>
+	          <li><a href="{% url 'client:logout' %}">logout</a></li>
+	        </ul>
+
+	      </div>
+	    </nav>
+	   </div>
+	</header>
+
+	{% if messages %}
+		<div class="center-align">
+			<ul class="messages">
+	    	{% for message in messages %}
+	    		<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	    	{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+
+	{% block content %} {% endblock %} 
+	
+	{% block footer %} {% endblock %} 
+
+
+</body>
+</html>

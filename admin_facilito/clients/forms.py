@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import Client
 
 """
 Constants
@@ -53,11 +54,11 @@ class EditUserForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ('username', 'email', 'first_name', 'last_name' )
-
+		
 class EditPasswordForm(forms.Form):
 	password = forms.CharField( max_length = 20, widget = forms.PasswordInput() )
-	new_password = forms.CharField( max_length = 20, widget = forms.PasswordInput(), validators = [must_be_gt]  )
-	repeat_password = forms.CharField( max_length = 20, widget = forms.PasswordInput(),  validators = [must_be_gt])
+	new_password = forms.CharField(max_length = 20, widget = forms.PasswordInput(), validators = [must_be_gt]  )
+	repeat_password = forms.CharField(max_length = 20, widget = forms.PasswordInput(),  validators = [must_be_gt])
 
 
 	def clean(self):
@@ -68,8 +69,10 @@ class EditPasswordForm(forms.Form):
 		if password1 != password2:
 			raise forms.ValidationError('Los password no son los mismos')
 
-
-
+class EditClientForm(forms.ModelForm):
+	class Meta:
+		model = Client
+		exclude = ['user']
 
 
 

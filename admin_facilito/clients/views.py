@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from .models import Client
 
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -16,6 +17,7 @@ from forms import LoginUserForm
 from forms import CreateUserForm
 from forms import EditUserForm
 from forms import EditPasswordForm
+from forms import EditClientForm
 
 from django.views.generic import TemplateView
 from django.views.generic import View
@@ -66,7 +68,7 @@ class LoginClass(View):
 class DashboardClass(LoginRequiredMixin, View):
 	login_url = 'client:login'
 	def get(self, request, *args, **kwargs):
-		return render( request, 'dashboard.html', {})
+		return render( request, 'client/dashboard.html', {})
 
 class CreateClass(CreateView):
 	success_url =  reverse_lazy('client:login')
@@ -125,5 +127,22 @@ def logout(request):
 	return redirect('client:login')
 
 
+@login_required( login_url = 'client:login' )
+def edit_client(request):
+	form = EditClientForm(request.POST or None, instance = client_instance(request.user) )
+	if request.method == 'POST':
+		if form.is_valid():
+			form.save()
+			messages.success(request, 'datos actualizados correctamente')
+
+	return render(request, 'client/edit_client.html',{'form' : form})
+
+
+def client_instance(user):
+	try:
+		return user.client
+	except:
+		return Client(user = user)
+	
 
 
