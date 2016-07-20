@@ -1,0 +1,17 @@
+{% extends "bases/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Modificar Password {% endblock %}
+
+{% block subtitle %}
+	<h3> Modificar Password </h3>
+{% endblock %}
+
+{% block content %}
+	
+	<form method="post" action="">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="actualizar">
+	</form>
+{% endblock %}

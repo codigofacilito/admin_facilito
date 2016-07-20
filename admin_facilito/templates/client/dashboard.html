@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
+</head>
+<body>
+
+	<h3>Bienvenido {{ user.username|title }}</h3>
+
+	<a href="{% url 'client:show' user.username %}">Ver mi perfil</a>
+	<a href="{% url 'client:edit'%}">Editar</a>
+	<a href="{% url 'client:edit_password'%}">Editar Password</a>
+	<a href="{% url 'client:logout' %}">Logout</a>
+
+</body>
+</html>
+
+
+
+
+

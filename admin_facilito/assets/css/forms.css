@@ -1,0 +1,80 @@
+.basic_form {
+	width: 380px;
+	margin: 4em auto;
+	padding: 3em 2em 2em 2em;
+	background: #fafafa;
+	border: 1px solid #ebebeb;
+	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+}
+
+.class_container_form{
+  width: 380px;
+  margin: 4em auto;
+  padding: 3em 2em 2em 2em;
+  background: #fafafa;
+  border: 1px solid #ebebeb;
+  box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+}
+
+footer { 
+  text-align: center; 
+}
+
+footer p {
+  color: #888;
+  font-size: 12px;
+}
+
+.errorlist li{
+  color: #CC6679;
+}
+
+.input-field label {
+  color: #ACACAC;
+}
+
+.input-field input[type=text]:focus + label {
+  color: #ACACAC;
+}
+
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #ACACAC;
+  box-shadow: 0 1px 0 0 #ACACAC;
+}
+
+.input-field input[type=text].valid {
+  border-bottom: 1px solid #ACACAC;
+  box-shadow: 0 1px 0 0 #ACACAC;
+}
+
+.input-field input[type=text].invalid {
+  border-bottom: 1px solid #ACACAC;
+  box-shadow: 0 1px 0 0 #ACACAC;
+}
+
+
+.input-field input[type=password]:focus + label {
+   color: #ACACAC;
+ }
+
+.input-field input[type=password]:focus {
+  border-bottom: 1px solid #ACACAC;
+  box-shadow: 0 1px 0 0 #ACACAC;
+}
+
+.input-field input[type=password].valid {
+  border-bottom: 1px solid #ACACAC;
+  box-shadow: 0 1px 0 0 #ACACAC;
+}
+
+.input-field input[type=password].invalid {
+  border-bottom: 1px solid #ACACAC;
+  box-shadow: 0 1px 0 0 #ACACAC;
+}
+
+.input-field .prefix.active {
+  color: #ACACAC;
+}
+
+
+

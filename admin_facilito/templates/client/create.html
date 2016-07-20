@@ -1,0 +1,51 @@
+{% extends 'bases/base_admin.html' %}
+
+{% block title %} Admin facilito {% endblock %}
+
+{% block scripts %}
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}" /> 
+
+{% endblock %} 
+
+{% block content %} 
+	
+	<div class= "class_container_form">
+		<form method="post" action="">
+			{% csrf_token %}
+			 
+			  {# {{ form.as_p }} #}  
+
+			  {% for field in form %}
+
+			  	<div class="row" >
+			  		<div class="input-field col s12">
+
+			  			{% if field.errors %}
+			  				{{ field.errors }}
+			  			{% endif %}
+
+			  			{{ field }}
+
+			  			<label class="{% for class in field.label_clasess %} {{ class }} {% endfor %}" for="{{ field.name }}" >  {{ field.label }} </label>
+
+
+			  		</div>
+			  	</div>
+
+			  {%  endfor %}
+
+			<input class="btn #9e9e9e grey" type="submit" value="registro">
+		</form>
+	</div>
+
+{% endblock %} 
+
+{% block footer %} 
+	<footer>
+		<p> Ya cuento con una  <a href="{% url 'client:login' %}"> cuenta	</a></p>
+	</footer>
+{% endblock %}
+
+
+
