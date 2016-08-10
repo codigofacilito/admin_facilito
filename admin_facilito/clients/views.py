@@ -37,7 +37,7 @@ Class
 
 class ShowClass(DetailView):
 	model = User
-	template_name = 'show.html'
+	template_name = 'client/show.html'
 	slug_field = 'username'
 	slug_url_kwarg = 'username_url'
 
@@ -126,16 +126,22 @@ def logout(request):
 	logout_django(request)
 	return redirect('client:login')
 
-
 @login_required( login_url = 'client:login' )
 def edit_client(request):
-	form = EditClientForm(request.POST or None, instance = client_instance(request.user) )
-	if request.method == 'POST':
-		if form.is_valid():
-			form.save()
-			messages.success(request, 'datos actualizados correctamente')
+	form_client = EditClientForm(request.POST or None, instance = client_instance(request.user) )
+	form_user = EditUserForm(request.POST or None, instance = request.user)
 
-	return render(request, 'client/edit_client.html',{'form' : form})
+	if request.method == 'POST':
+		if form_client.is_valid() and form_user.is_valid():
+			form_user.save()
+			form_client.save()
+			messages.success(request, 'Datos actualizados correctamente.')
+
+	context = {
+		'form_client': form_client,
+		'form_user' : form_user
+	}
+	return render(request, 'client/edit_client.html', context )
 
 
 def client_instance(user):

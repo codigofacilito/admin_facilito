@@ -12,16 +12,9 @@
 		<form method="post" action="">
 			{% csrf_token %}
 				
-				{% for field in form %}
-	      	<div class="row">
-	        	<div class="input-field col s12">
-	          	 {{ field }}
-	          	<label class="{% for class in field.label_classes %}{{ class }} {% endfor %}" for="{{ field.name }}"> {{ field.label }}</label>
-	        	</div>
-	      	</div>
-	  		{% endfor %}
-			
-			
+				{% include "includes/_forms.html" with form=form_user %}
+				{% include "includes/_forms.html" with form=form_client %}
+
 			<input class="btn #9e9e9e grey" type="submit" value="actualizar">
 		</form>
 	</div>

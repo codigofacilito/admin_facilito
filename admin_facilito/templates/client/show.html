@@ -1,12 +1,29 @@
+{% load client_extras %}
+
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>{{ user.username }}</title>
+	<title> {{ user.username }}</title>
 </head>
 <body>
 
-	<h3>Hola Usuario  { user.username }  </h3>
-	
+	<h3>Hola Usuario  {{ user.username|title }}  </h3>
+	<p>Biografía </p>
+	<p> {{user.client.bio|truncatechars:100  }} </p>
+
+	{% for field in user.socialnetwork|list_fields %}
+		{% with user.socialnetwork|get_value:field as value %}
+			
+			{% if value %}
+				<p> {{ field }} </p>
+				<p> {{ value }} </p>
+			{% endif %}
+			
+		{% endwith %}
+		
+	{% endfor %}
+
+
 </body>
 </html>
 
