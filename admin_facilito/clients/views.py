@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from .models import Client
+from .models import SocialNetwork
 
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -18,6 +19,7 @@ from forms import CreateUserForm
 from forms import EditUserForm
 from forms import EditPasswordForm
 from forms import EditClientForm
+from forms import EditClientSocial
 
 from django.views.generic import TemplateView
 from django.views.generic import View
@@ -82,20 +84,22 @@ class CreateClass(CreateView):
 		self.object.save()
 		return HttpResponseRedirect( self.get_success_url() ) 
 
-class EditClass(LoginRequiredMixin, UpdateView, SuccessMessageMixin):
+class EditSocialClass(LoginRequiredMixin, UpdateView, SuccessMessageMixin):
 	login_url = 'client:login'
-	model = User
-	template_name = 'client/edit.html'
-	success_url = reverse_lazy('client:edit')
-	form_class = EditUserForm
-	success_message = "Tu usuario ha sido actualizado"
-
-	def form_valid(self, request, *args, **kwargs):
-		messages.success(self.request, self.success_message)
-		return super(EditClass, self).form_valid(request, *args, **kwargs)
+	model = SocialNetwork
+	template_name = 'client/edit_social.html'
+	success_url = reverse_lazy('client:edit_social')
+	form_class = EditClientSocial
+	success_message = "Tu usuarios ha sido actualizado exitosamente."
 
 	def get_object(self, queryset = None):
-		return self.request.user
+		return self.get_social_instance()
+
+	def get_social_instance(self):
+		try:
+			return self.request.user.socialnetwork
+		except:
+			return SocialNetwork(user = self.request.user)
 
 """
 Functions
@@ -127,7 +131,7 @@ def logout(request):
 	return redirect('client:login')
 
 @login_required( login_url = 'client:login' )
-def edit_client(request):
+def edit(request):
 	form_client = EditClientForm(request.POST or None, instance = client_instance(request.user) )
 	form_user = EditUserForm(request.POST or None, instance = request.user)
 
@@ -141,14 +145,11 @@ def edit_client(request):
 		'form_client': form_client,
 		'form_user' : form_user
 	}
-	return render(request, 'client/edit_client.html', context )
-
+	return render(request, 'client/edit.html', context )
 
 def client_instance(user):
 	try:
 		return user.client
 	except:
 		return Client(user = user)
-	
-
 

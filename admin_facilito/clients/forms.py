@@ -4,6 +4,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Client
+from .models import SocialNetwork
 
 """
 Constants
@@ -47,8 +48,8 @@ class CreateUserForm(forms.ModelForm):
 
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
-		if User.objects.filter(email = email).count():
-			raise forms.ValidationError("El email ya se encuentra en uso.")
+		if User.objects.filter(email=email).count():
+			raise forms.ValidationError('El email debe de ser unico.')
 		return email
 
 	class Meta:
@@ -64,13 +65,13 @@ class EditUserForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ('username', 'email', 'first_name', 'last_name' )
-	
+
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
-		if User.objects.filter(email = email).exclude(pk = self.instance.id).count():
-			raise forms.ValidationError("El email ya se encuentra en uso.")
+		if User.objects.filter(email=email).exclude(pk=self.instance.id).count():
+			raise forms.ValidationError('El email debe de ser unico.')
 		return email
-
+	
 class EditPasswordForm(forms.Form):
 	password = forms.CharField( max_length = 20, widget = forms.PasswordInput() )
 	new_password = forms.CharField(max_length = 20,label = "Nueva password", widget = forms.PasswordInput(), validators = [must_be_gt]  )
@@ -98,6 +99,10 @@ class EditClientForm(forms.ModelForm):
 		self.fields['job'].widget.attrs.update({'id': 'job_edit_client', 'class' : 'validate'})
 		self.fields['bio'].widget.attrs.update({'id': 'bio_edit_client', 'class' : 'validate'})
 
+class EditClientSocial(forms.ModelForm):
+	class Meta:
+		model = SocialNetwork
+		exclude = ['user']
 
 
 

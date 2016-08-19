@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^$', home, name = 'home'),
     url(r'^admin/', admin.site.urls),
     url(r'^client/', include('clients.urls')),
+    url(r'^project/', include('projects.urls')),
 ]
 
 handler404 = error_404

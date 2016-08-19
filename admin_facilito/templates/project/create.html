@@ -1,24 +1,22 @@
 {% extends 'client/bases/base_client.html'%}
 
-{% block title %} Editar cuenta {% endblock %} 
+{% block title %} Nuevo Proyecto {% endblock %} 
 
 {% block scripts %}
 	{% load staticfiles %}
 	 <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}" /> 
 {% endblock %} 
-
+	
 {% block content %} 
 	<div class = "class_container_form" >
 		<form method="post" action="">
 			{% csrf_token %}
-				
-				{% include "includes/_forms.html" with form=form_user %}
-				{% include "includes/_forms.html" with form=form_client %}
-
-			<input class="btn #9e9e9e grey" type="submit" value="actualizar">
+			{% include "includes/_forms.html" with form=form only %}
+			<input class="btn #9e9e9e grey" type="submit" value="crear">
 		</form>
 	</div>
-
 {% endblock %} 
 
-{% block footer %} {% endblock %} 
+{% block footer %} 
+
+{% endblock %} 
