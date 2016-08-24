@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.contrib.auth.models import User
 from .models import Client
 from .models import SocialNetwork
@@ -33,6 +36,7 @@ from django.core.urlresolvers import reverse_lazy
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+
 """
 Class
 """

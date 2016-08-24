@@ -18,7 +18,6 @@ urlpatterns = [
     url(r'^logout/$', logout, name = 'logout'),
     url(r'^dashboard/$', DashboardClass.as_view(), name = 'dashboard'),
     url(r'^create/$', CreateClass.as_view(), name = 'create'),
-    
     url(r'^edit/$', edit, name = 'edit'),
 		url(r'^edit/password/$', edit_password, name = 'edit_password'),
     url(r'^edit/social/$', EditSocialClass.as_view(), name = 'edit_social'),

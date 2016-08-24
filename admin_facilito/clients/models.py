@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 from django.db import models
 
@@ -10,7 +13,6 @@ class Client(models.Model):
 
 	def __str__(self):
 		return self.user.username
-
 
 class SocialNetwork(models.Model):
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
