@@ -9,7 +9,8 @@
 
 {% block content %} 
 	<h3>Bienvenido {{ user.username|title }}</h3>
-	<a href="{% url 'client:show' user.username %}">  {{user.username}} </a>
+	<a href="{% url 'client:show' user.username %}">  {{user.username}} 
+		<a href="{% url 'project:my_projects'%}">  Mis proyectos </a>
 {% endblock %} 
 
 {% block footer %} {% endblock %} 

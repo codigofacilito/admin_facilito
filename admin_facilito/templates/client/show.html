@@ -11,17 +11,19 @@
 	<p>Biografía </p>
 	<p> {{user.client.bio|truncatechars:100  }} </p>
 
-	{% for field in user.socialnetwork|list_fields %}
-		{% with user.socialnetwork|get_value:field as value %}
+	{% if user.socialnetwork %}
+		{% for field in user.socialnetwork|list_fields %}
+			{% with user.socialnetwork|get_value:field as value %}
+				
+				{% if value %}
+					<p> {{ field }} </p>
+					<p> {{ value }} </p>
+				{% endif %}
+				
+			{% endwith %}
 			
-			{% if value %}
-				<p> {{ field }} </p>
-				<p> {{ value }} </p>
-			{% endif %}
-			
-		{% endwith %}
-		
-	{% endfor %}
+		{% endfor %}
+	{% endif %}
 
 
 </body>

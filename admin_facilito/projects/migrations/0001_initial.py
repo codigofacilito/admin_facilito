@@ -25,7 +25,6 @@ class Migration(migrations.Migration):
                 ('description', models.TextField()),
                 ('dead_line', models.DateField()),
                 ('create_date', models.DateField(default=datetime.date.today)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

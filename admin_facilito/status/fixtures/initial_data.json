@@ -1,0 +1,26 @@
+[
+	{
+		"model": "status.status",
+		"pk": 1,
+		"fields": 
+			{
+				"title": "Nuevo",
+				"description": "Se asigna cuando el proyecto es creado",
+				"color": "#DAEDC9",
+				"create_date": "2016-08-26T17:00:04Z",
+				"active": true
+				}
+	},
+	{
+		"model": "status.status",
+		"pk": 2,
+		"fields": 
+			{
+				"title": "Finalizado", 
+				"description": "Finalizado",
+				"color": "#DAEDC9",
+				"create_date": "2016-09-06T17:13:16Z",
+				"active": true
+				}
+	}
+]

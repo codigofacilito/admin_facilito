@@ -3,13 +3,13 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from status.models import Status
+from django.contrib.auth.models import User
 
 from django.db import models
 import datetime
 from django.utils import timezone
 
 class Project(models.Model):
-	user = models.ForeignKey(User, on_delete= models.CASCADE)
 	title = models.CharField(max_length=50)
 	description = models.TextField()
 	dead_line = models.DateField()
@@ -24,5 +24,33 @@ class Project(models.Model):
 	def create_slug_field(self, value):
 		return value.lower().replace(" ", "-")
 
+	def get_id_status(self):
+		return self.projectstatus_set.last().status_id
+
+	def get_status(self):
+		return self.projectstatus_set.last().status
+
 	def __str__(self):
 		return self.title
+
+class ProjectStatus(models.Model):
+	project = models.ForeignKey(Project)
+	status = models.ForeignKey(Status)
+	create_date = models.DateTimeField(default = timezone.now)
+
+class ProjectPermission(models.Model):
+	title = models.CharField(max_length=50)
+	description = models.TextField()
+	level = models.IntegerField()
+	create_date = models.DateTimeField(default = timezone.now)
+
+class ProjectUser(models.Model):
+	project = models.ForeignKey(Project, on_delete = models.CASCADE)
+	user = models.ForeignKey(User)
+	permission = models.ForeignKey(ProjectPermission)
+	create_date = models.DateTimeField(default = timezone.now)
+
+	def get_project(self):
+		return self.project
+
+

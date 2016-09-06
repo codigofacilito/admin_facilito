@@ -40,7 +40,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 """
 Class
 """
-
 class ShowClass(DetailView):
 	model = User
 	template_name = 'client/show.html'
