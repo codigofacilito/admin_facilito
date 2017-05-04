@@ -10,8 +10,10 @@
 {% block content %} 
 
 	<h4>{{ project.title }}</h4>
-	<a href="{% url 'project:edit' project.slug %}"> Editar </a>
-
+    
+  {% if has_permission %}
+    <a href="{% url 'project:edit' project.slug %}"> Editar </a>
+  {% endif %}
 
 {% endblock %} 
 

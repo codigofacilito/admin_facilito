@@ -30,6 +30,9 @@ class Project(models.Model):
 	def get_status(self):
 		return self.projectstatus_set.last().status
 
+	def user_has_permission(self, user):
+		return self.projectuser_set.filter(user=user, permission_id=2).count() > 0
+
 	def __str__(self):
 		return self.title
 
@@ -43,6 +46,9 @@ class ProjectPermission(models.Model):
 	description = models.TextField()
 	level = models.IntegerField()
 	create_date = models.DateTimeField(default = timezone.now)
+
+	def __str__(self):
+		return self.title
 
 class ProjectUser(models.Model):
 	project = models.ForeignKey(Project, on_delete = models.CASCADE)

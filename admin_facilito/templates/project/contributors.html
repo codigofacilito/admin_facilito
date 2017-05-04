@@ -1,0 +1,22 @@
+{% extends 'client/bases/base_client.html'%}
+
+{% block title %} Colaboradores {% endblock %} 
+
+{% block scripts %}
+  {% load staticfiles %}
+   <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}" />
+{% endblock %} 
+  
+{% block content %} 
+  
+    <h4>Colaboradores!</h4>
+    {% for user in object_list%}
+      <p> {{ user.user }} Permiso : {{ user.permission }}</p>
+    {% endfor %}
+
+  
+{% endblock %} 
+
+{% block footer %} 
+
+{% endblock %} 

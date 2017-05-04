@@ -22,8 +22,8 @@ from django.db import transaction
 """
 Class
 """
-class CreateClass(CreateView,LoginRequiredMixin):
-	login_url = 'client_login'
+class CreateClass(LoginRequiredMixin, CreateView):
+	login_url = 'client:login'
 	template_name = 'project/create.html'
 	model = Project
 	form_class = ProjectForm
@@ -42,16 +42,37 @@ class CreateClass(CreateView,LoginRequiredMixin):
 	def get_url_project(self):
 		return reverse_lazy('project:show', kwargs = {'slug' : self.object.slug} )
 
-class ListClass(ListView, LoginRequiredMixin):
-	login_url = 'client_login'
-	template_name = 'project/own.html'
+class ListClass(LoginRequiredMixin, ListView):
+	login_url = 'client:login'
+	template_name = 'project/index.html'
+
+	def get_queryset(self):
+		return Project.objects.all()
+
+class ListMyProjectsClass(LoginRequiredMixin, ListView):
+	login_url = 'client:login'
+	template_name = 'project/mine.html'
 
 	def get_queryset(self):
 		return ProjectUser.objects.filter(user = self.request.user)
 
+class ListContributorsClass(ListView):
+	template_name = 'project/contributors.html'
+
+	def get_queryset(self):
+		project = get_object_or_404(Project, slug=self.kwargs['slug'])
+		return ProjectUser.objects.filter(project=project)
+
 class ShowClass(DetailView):
 	model = Project
 	template_name = 'project/show.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(ShowClass, self).get_context_data(**kwargs)
+		if not self.request.user.is_anonymous():
+			context['has_permission'] = self.object.user_has_permission(self.request.user)
+
+		return context
 
 """
 Functions
@@ -60,6 +81,10 @@ Functions
 def edit(request, slug=''):
 	project = get_object_or_404(Project, slug=slug)
 	
+	if not project.user_has_permission(request.user):
+		lazy = reverse_lazy('project:show', kwargs={'slug': project.slug})
+		return HttpResponseRedirect(lazy)
+
 	form_project = ProjectForm(request.POST or None, instance = project)
 	forms_status = StatusChoiceForm(request.POST or None, 
 									initial = {'status': project.get_id_status()

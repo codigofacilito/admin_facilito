@@ -32,6 +32,7 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.core.urlresolvers import reverse_lazy
 
 from django.contrib import messages
@@ -149,6 +150,19 @@ def edit(request):
 		'form_user' : form_user
 	}
 	return render(request, 'client/edit.html', context )
+
+import json
+
+def user_filter(request):
+	username = request.GET.get('username', '') #
+	
+	users = User.objects.filter(username__startswith=username) #Select * from users where username like '%username'
+	users = [ user_serializer(user) for user in users ]
+	
+	return HttpResponse( json.dumps(users),
+												content_type='application/json' )
+def user_serializer(user):
+	return {'id' : user.id, 'username' : user.username}
 
 def client_instance(user):
 	try:
