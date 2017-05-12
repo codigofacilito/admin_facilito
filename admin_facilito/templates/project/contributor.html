@@ -1,0 +1,32 @@
+{% extends 'client/bases/base_client.html'%}
+
+{% block title %} Colaborador {% endblock %} 
+
+{% block scripts %}
+  {% load staticfiles %}
+     
+{% endblock %} 
+  
+{% block content %} 
+    <h4>Colaborador {{ user.username }}</h4>
+    {% if has_permission %}
+      <div>
+        <form method="POST", action="">
+          {% csrf_token %}
+          {% include "includes/_forms.html" with form=form only %}
+          <input class="btn #9e9e9e grey" type="submit" value="actualizar">
+        </form>
+      </div>
+
+      <br>
+      <br>
+
+      <a href="{% url 'project:delete_contributor' project.slug user.username %}">eliminar de colaboradores</a>
+    {% endif %}
+    
+
+{% endblock %} 
+
+{% block footer %} 
+
+{% endblock %} 

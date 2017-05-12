@@ -1,10 +1,15 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 
 from status.models import Status
+from django.contrib.auth.models import User
 from .models import Project
 from .models import ProjectUser
+from .models import ProjectPermission
+
 from .forms import ProjectForm
+from .forms import PermissionProject
 from status.forms import StatusChoiceForm
 
 from django.views.generic.list import ListView
@@ -32,7 +37,8 @@ class CreateClass(LoginRequiredMixin, CreateView):
 	def create_objects(self):
 		self.object.save()
 		self.object.projectstatus_set.create( status = Status.get_defult_status() )
-		self.object.projectuser_set.create(user= self.request.user, permission_id = 1 )
+		self.object.projectuser_set.create(user= self.request.user,
+																			permission=ProjectPermission.founder_permission() )
 
 	def form_valid(self, form):
 		self.object = form.save(commit = False)
@@ -60,8 +66,13 @@ class ListContributorsClass(ListView):
 	template_name = 'project/contributors.html'
 
 	def get_queryset(self):
-		project = get_object_or_404(Project, slug=self.kwargs['slug'])
-		return ProjectUser.objects.filter(project=project)
+		self.project = get_object_or_404(Project, slug=self.kwargs['slug'])
+		return ProjectUser.objects.filter(project=self.project)
+
+	def get_context_data(self, **kwargs):
+		context = super(ListContributorsClass, self).get_context_data(**kwargs)
+		context['project'] = self.project
+		return context
 
 class ShowClass(DetailView):
 	model = Project
@@ -103,3 +114,60 @@ def edit(request, slug=''):
 		'forms_status': forms_status
 	}
 	return render(request, 'project/edit.html', context)
+
+@login_required(login_url='client:login')
+def add_contributor(request, slug, username):
+	project = get_object_or_404(Project, slug=slug)
+	user = get_object_or_404(User, username=username)
+
+	if not project.user_has_permission(request.user):
+		lazy = reverse_lazy('project:show', kwargs={'slug': project.slug})
+		return HttpResponseRedirect(lazy)
+
+	if not project.projectuser_set.filter(user=user).exists():
+		project.projectuser_set.create(user=user,
+																	permission=ProjectPermission.contributor_permission())
+
+	return redirect('project:contributors', slug=project.slug)
+
+@login_required(login_url='client:login')
+def user_contributor(request, slug, username):
+	project = get_object_or_404(Project, slug=slug)
+	user = get_object_or_404(User, username=username)
+	permission = get_object_or_404(ProjectUser, user=user, project=project)
+
+	form = PermissionProject(request.POST or None,
+													initial={'permission' : permission.permission_id })
+
+	if request.method == 'POST' and form.is_valid():
+		selection_id = form.cleaned_data['permission'].id
+		if selection_id != permission.id: #
+			permission.permission_id = selection_id
+			permission.save()
+			messages.success(request, 'Datos actualizados correctamente.')
+
+	context = {
+		'project' : project,
+		'user' : user,
+		'has_permission' : project.user_has_permission(request.user),
+		'form' : form,
+	}
+
+	return render(request, 'project/contributor.html', context)
+
+@login_required(login_url='client:login')
+def delete_contributor(request, slug, username):
+	project = get_object_or_404(Project, slug=slug)
+	user = get_object_or_404(User, username=username)
+
+	if not project.user_has_permission(request.user):
+		lazy = reverse_lazy('project:show', kwargs={'slug': project.slug})
+		return HttpResponseRedirect(lazy)
+
+	project_user = get_object_or_404(ProjectUser, user=user, project=project)
+	if not project_user.is_founder():
+		project_user.delete()
+	
+	return redirect('project:contributors', slug=project.slug)
+
+

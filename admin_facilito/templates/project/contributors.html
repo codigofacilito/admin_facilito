@@ -5,6 +5,7 @@
 {% block scripts %}
   {% load staticfiles %}
    <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}" />
+   <script type="text/javascript" src="{% static 'js/search_user.js' %}"></script>
 {% endblock %} 
   
 {% block content %} 
@@ -12,9 +13,24 @@
     <h4>Colaboradores!</h4>
     {% for user in object_list%}
       <p> {{ user.user }} Permiso : {{ user.permission }}</p>
+      <a href="{% url 'project:user_contributor' project.slug user.user.username %}">ver</a>
     {% endfor %}
 
-  
+    <form id="search-user-form" method="GET" action="{% url 'client:filter' %}">
+      <input type="text" name="username">
+      <input type="submit" value="buscar">
+    </form>
+
+
+    <div id="ajax-result">
+      <ul>
+        <!-- Aqui colocaremos los resultados -->
+      </ul>  
+    </div>
+
+
+
+
 {% endblock %} 
 
 {% block footer %} 

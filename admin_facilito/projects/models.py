@@ -31,7 +31,7 @@ class Project(models.Model):
 		return self.projectstatus_set.last().status
 
 	def user_has_permission(self, user):
-		return self.projectuser_set.filter(user=user, permission_id=2).count() > 0
+		return self.projectuser_set.filter(user=user, permission_id=1).count() > 0
 
 	def __str__(self):
 		return self.title
@@ -50,6 +50,18 @@ class ProjectPermission(models.Model):
 	def __str__(self):
 		return self.title
 
+	@classmethod
+	def founder_permission(cls):
+		return ProjectPermission.objects.get(pk=1)
+
+	@classmethod
+	def co_founder_permission(cls):
+		return ProjectPermission.objects.get(pk=4)
+
+	@classmethod
+	def contributor_permission(cls):
+		return ProjectPermission.objects.get(pk=5)
+
 class ProjectUser(models.Model):
 	project = models.ForeignKey(Project, on_delete = models.CASCADE)
 	user = models.ForeignKey(User)
@@ -59,4 +71,6 @@ class ProjectUser(models.Model):
 	def get_project(self):
 		return self.project
 
+	def is_founder(self):
+		return self.permission == ProjectPermission.founder_permission()
 
