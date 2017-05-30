@@ -1,1 +1,32 @@
-[{"model": "projects.projectpermission", "pk": 1, "fields": {"title": "Fundador", "description": "Fundador del proyecto", "level": 1, "create_date": "2017-05-02T19:45:45Z"}}, {"model": "projects.projectpermission", "pk": 4, "fields": {"title": "Co fundador", "description": "Co fundado", "level": 1, "create_date": "2017-05-12T15:27:08Z"}}, {"model": "projects.projectpermission", "pk": 5, "fields": {"title": "Colaborador", "description": "Colaborador", "level": 2, "create_date": "2017-05-12T15:27:23Z"}}]
+[
+  {
+    "model": "projects.projectpermission", 
+    "pk": 1, 
+    "fields": {
+      "title": "Fundador", 
+      "description": "Fundador del proyecto",
+      "level": 1, 
+      "create_date": "2017-05-02T19:45:45Z"
+    }
+  },
+  {
+    "model": "projects.projectpermission",
+    "pk": 2,
+    "fields": {
+      "title": "Co fundador", 
+      "description": "Co fundado", 
+      "level": 1, 
+      "create_date": "2017-05-12T15:27:08Z"
+    }
+  },
+  {
+    "model": "projects.projectpermission",
+    "pk": 3,
+    "fields": {
+      "title": "Colaborador",
+      "description": "Colaborador",
+      "level": 2,
+      "create_date": "2017-05-12T15:27:23Z"
+    }
+  }
+]

@@ -30,8 +30,8 @@ class Project(models.Model):
 	def get_status(self):
 		return self.projectstatus_set.last().status
 
-	def user_has_permission(self, user):
-		return self.projectuser_set.filter(user=user, permission_id=1).count() > 0
+def user_has_permission(self, user):
+		return self.projectuser_set.filter(user=user, permission_id__in=ProjectPermission.admin_permission()).count() > 0
 
 	def __str__(self):
 		return self.title
@@ -56,11 +56,15 @@ class ProjectPermission(models.Model):
 
 	@classmethod
 	def co_founder_permission(cls):
-		return ProjectPermission.objects.get(pk=4)
+		return ProjectPermission.objects.get(pk=2)
 
 	@classmethod
 	def contributor_permission(cls):
-		return ProjectPermission.objects.get(pk=5)
+		return ProjectPermission.objects.get(pk=3)
+
+	@classmethod
+	def admin_permission(cls):
+		return [1, 2]
 
 class ProjectUser(models.Model):
 	project = models.ForeignKey(Project, on_delete = models.CASCADE)
@@ -73,4 +77,16 @@ class ProjectUser(models.Model):
 
 	def is_founder(self):
 		return self.permission == ProjectPermission.founder_permission()
+
+	def valida_change_permission(self):
+		if not self.is_founder():
+			return True 
+		return self.exists_another_founder()
+
+	def exists_another_founder(self):
+		return ProjectUser.objects.filter(project=self.project, permission=ProjectPermission.founder_permission()).exclude(user=self.user).count() > 0
+
+
+
+
 
